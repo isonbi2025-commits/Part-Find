@@ -9,126 +9,183 @@
 
   <style>
     :root {
-      --primary: #5243e3;
-      --primary-hover: #3d2fe0;
-      --bg: #f6f6ff;
-      --text-dark: #222;
-      --text-muted: #666;
+      --primary: #5a3efc;
+      --primary-hover: #4732e0;
+      --accent: #9b8cff;
+      --bg-gradient: radial-gradient(circle at top left, #d9d6ff, #f4f3ff, #ffffff);
+      --text-dark: #1c1b29;
+      --text-muted: #6c6a80;
+    }
+
+    * {
+      box-sizing: border-box;
+      transition: all 0.3s ease;
     }
 
     body {
       margin: 0;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      font-family: "Poppins", "Segoe UI", sans-serif;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       color: var(--text-dark);
-      background: radial-gradient(
-        circle at 50% 30%,
-        rgba(180, 185, 255, 0.35) 0%,
-        rgba(220, 220, 255, 0.65) 40%,
-        rgba(255, 255, 255, 1) 100%
-      );
-      background-attachment: fixed;
-      animation: bgPulse 8s ease-in-out infinite;
+      background: var(--bg-gradient);
+      overflow: hidden;
+      position: relative;
     }
 
-    @keyframes bgPulse {
-      0% {
-        background-size: 100%;
-      }
-      50% {
-        background-size: 105%;
-      }
-      100% {
-        background-size: 100%;
-      }
+    /* Animated background orbs */
+    body::before,
+    body::after {
+      content: "";
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      filter: blur(120px);
+      z-index: -1;
+      animation: float 12s infinite alternate ease-in-out;
+    }
+
+    body::before {
+      top: -100px;
+      left: -150px;
+      background: rgba(146, 129, 255, 0.45);
+    }
+
+    body::after {
+      bottom: -120px;
+      right: -150px;
+      background: rgba(255, 180, 255, 0.4);
+    }
+
+    @keyframes float {
+      from { transform: translateY(0px); }
+      to { transform: translateY(40px); }
     }
 
     h1 {
-      font-size: 2.5rem;
+      font-size: 2.8rem;
       font-weight: 800;
-      margin-bottom: 2rem;
+      margin-bottom: 1.2rem;
       text-align: center;
+      letter-spacing: -0.5px;
     }
 
     h1 span {
       color: var(--primary);
+      text-shadow: 0 2px 6px rgba(82, 67, 227, 0.25);
     }
 
+    p.subtitle {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      margin-bottom: 2.5rem;
+      text-align: center;
+      max-width: 600px;
+      line-height: 1.6;
+    }
+
+    /* Button */
     .start-btn {
-      background: var(--primary);
+      background: linear-gradient(135deg, var(--primary), var(--accent));
       color: #fff;
       border: none;
-      padding: 14px 36px;
-      font-size: 1.1rem;
+      padding: 16px 42px;
+      font-size: 1.15rem;
       font-weight: 600;
-      border-radius: 12px;
+      border-radius: 14px;
       cursor: pointer;
-      box-shadow: 0 10px 30px rgba(82, 67, 227, 0.25);
-      transition: all 0.2s ease;
+      box-shadow: 0 10px 30px rgba(90, 62, 252, 0.35);
+      animation: pulse 2.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 0 rgba(90, 62, 252, 0.35); }
+      50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(90, 62, 252, 0.5); }
     }
 
     .start-btn:hover {
-      background: var(--primary-hover);
+      background: linear-gradient(135deg, var(--primary-hover), var(--accent));
       transform: translateY(-3px);
     }
 
     footer {
       position: absolute;
       bottom: 20px;
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       color: var(--text-muted);
+      text-align: center;
+      letter-spacing: 0.2px;
     }
 
     /* Modal Styling */
     #chatModal {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.45);
-      backdrop-filter: blur(6px);
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(10px);
       display: flex;
       align-items: center;
       justify-content: center;
       z-index: 1000;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.25s ease;
+      transform: scale(0.95);
+      transition: all 0.35s ease;
     }
 
     #chatModal.open {
       opacity: 1;
       pointer-events: auto;
+      transform: scale(1);
     }
 
     #chatModal elevenlabs-convai {
-      width: 360px;
-      height: 500px;
+      width: 380px;
+      height: 520px;
       display: block;
-      border-radius: 16px;
+      border-radius: 20px;
       overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      animation: slideUp 0.4s ease forwards;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
     }
 
     .modal-close {
       position: absolute;
-      top: 20px;
-      right: 20px;
+      top: 22px;
+      right: 28px;
       border: none;
       background: transparent;
-      font-size: 24px;
+      font-size: 26px;
       cursor: pointer;
       color: #fff;
+      opacity: 0.8;
+      transition: opacity 0.2s;
+    }
+
+    .modal-close:hover {
+      opacity: 1;
     }
   </style>
 </head>
 
 <body>
   <h1>Welcome to <span>Demo Call</span></h1>
-  <button class="start-btn" id="chatButton">Start a Call</button>
+  <p class="subtitle">Experience the power of conversational AI through the  Voice Agent — powered by ISON Xperiences.</p>
 
-  <footer>Powered by Ison Xperiences</footer>
+  <button class="start-btn" id="chatButton">🚀 Start a Call</button>
+
+  <footer>Powered by Ison Xperiences   </footer>
 
   <div id="chatModal">
     <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
@@ -157,6 +214,7 @@
   </script>
 </body>
 </html>
+
 
 
 
