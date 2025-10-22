@@ -25,52 +25,63 @@
     body {
       margin: 0;
       font-family: "Poppins", "Segoe UI", sans-serif;
-      min-height: 100vh;
+      height: 100vh;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
+      flex-direction: column;
+      text-align: center;
       color: var(--text-dark);
       background: var(--bg-gradient);
       overflow: hidden;
       position: relative;
     }
 
-    /* Animated background orbs */
+    /* Animated background gradient glow */
     body::before,
     body::after {
       content: "";
       position: absolute;
-      width: 400px;
-      height: 400px;
+      width: 500px;
+      height: 500px;
       border-radius: 50%;
       filter: blur(120px);
       z-index: -1;
-      animation: float 12s infinite alternate ease-in-out;
+      animation: float 10s infinite alternate ease-in-out;
     }
 
     body::before {
       top: -100px;
       left: -150px;
-      background: rgba(146, 129, 255, 0.45);
+      background: rgba(146, 129, 255, 0.4);
     }
 
     body::after {
-      bottom: -120px;
+      bottom: -100px;
       right: -150px;
       background: rgba(255, 180, 255, 0.4);
     }
 
     @keyframes float {
-      from { transform: translateY(0px); }
-      to { transform: translateY(40px); }
+      from { transform: translateY(0); }
+      to { transform: translateY(30px); }
+    }
+
+    .container {
+      max-width: 700px;
+      padding: 0 20px;
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     h1 {
       font-size: 2.8rem;
       font-weight: 800;
       margin-bottom: 1.2rem;
-      text-align: center;
       letter-spacing: -0.5px;
     }
 
@@ -83,12 +94,9 @@
       font-size: 1.1rem;
       color: var(--text-muted);
       margin-bottom: 2.5rem;
-      text-align: center;
-      max-width: 600px;
       line-height: 1.6;
     }
 
-    /* Button */
     .start-btn {
       background: linear-gradient(135deg, var(--primary), var(--accent));
       color: #fff;
@@ -114,10 +122,11 @@
 
     footer {
       position: absolute;
-      bottom: 20px;
+      bottom: 18px;
+      width: 100%;
+      text-align: center;
       font-size: 0.9rem;
       color: var(--text-muted);
-      text-align: center;
       letter-spacing: 0.2px;
     }
 
@@ -180,12 +189,15 @@
 </head>
 
 <body>
-  <h1>Welcome to <span>Demo Call</span></h1>
-  <p class="subtitle">Experience the power of conversational AI through the  Voice Agent — powered by ISON Xperiences.</p>
+  <div class="container">
+    <h1>Welcome to <span>Demo Call</span></h1>
+    <p class="subtitle">
+      Experience the power of conversational AI through the Voice Agent — powered by ISON Xperiences.
+    </p>
+    <button class="start-btn" id="chatButton">🚀 Start a Call</button>
+  </div>
 
-  <button class="start-btn" id="chatButton">🚀 Start a Call</button>
-
-  <footer>Powered by Ison Xperiences   </footer>
+  <footer>© 2025 Ison Xperiences | Powered by ElevenLabs</footer>
 
   <div id="chatModal">
     <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
